@@ -287,6 +287,7 @@ as <tt>-fbOrigWeight=number</tt> on the command line.</dd>
 #include "indri/SnippetBuilder.hpp"
 
 #include <queue>
+#include <sstream>
 
 static bool copy_parameters_to_string_vector( std::vector<std::string>& vec, indri::api::Parameters p, const std::string& parameterName ) {
   if( !p.exists(parameterName) )
@@ -700,6 +701,7 @@ void push_queue( std::queue< query_t* >& q, indri::api::Parameters& queries,
 }
 
 int main(int argc, char * argv[]) {
+
   try {
     indri::api::Parameters& param = indri::api::Parameters::instance();
     param.loadCommandLine( argc, argv );
@@ -773,6 +775,15 @@ int main(int argc, char * argv[]) {
         queueLock.unlock();
 
         std::cout << result->text;
+
+        // output query and expanded query to stderr
+        std:istringstream iss(result->text);
+        std::string line;
+        std::cerr << "# number: " << result->number << std::endl;
+        for (int i = 0; i < 2 && std::getline(iss, line); ++i) {
+            std::cerr << line << std::endl;
+        }
+
         delete result;
         query++;
 
