@@ -287,6 +287,8 @@ as <tt>-fbOrigWeight=number</tt> on the command line.</dd>
 #include "indri/SnippetBuilder.hpp"
 
 #include <queue>
+#include <iostream>
+#include <fstream>
 
 static bool copy_parameters_to_string_vector( std::vector<std::string>& vec, indri::api::Parameters p, const std::string& parameterName ) {
   if( !p.exists(parameterName) )
@@ -716,6 +718,32 @@ int main(int argc, char * argv[]) {
 
     if (param.exists("baseline") && param.exists("rule"))
       LEMUR_THROW( LEMUR_BAD_PARAMETER_ERROR, "Smoothing rules may not be specified when running a baseline." );
+
+    if (param.exists("stopfile")) {
+      std::string stopfile = param.get("stopfile", "");
+      std::ifstream fin (stopfile.c_str(), std::ifstream::in);
+      if (!fin.good()) {
+        LEMUR_THROW(LEMUR_IO_ERROR, "Couldn't open stopfile file '"
+            + stopfile + "' for reading.");
+      } else {
+        std::vector<std::string> stopwords;
+        std::string word;
+
+        while (std::getline(fin, word)) {
+          stopwords.push_back(word);
+        }
+
+        // Combine with existing stopwords supplied with 'stopper.word'
+        if (!param.exists("stopper")) {
+          param.set("stopper", "");
+        }
+
+        indri::api::Parameters p = param.get("stopper");
+        for (size_t i = 0; i < stopwords.size(); ++i) {
+          p.append("word").set(stopwords[i]);
+        }
+      }
+    }
 
     int threadCount = param.get( "threads", 1 );
     std::queue< query_t* > queries;
