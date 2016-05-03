@@ -71,7 +71,7 @@ using namespace lemur::api;
 // debug code: should be gone soon
 #ifdef TIME_QUERIES
 #define INIT_TIMER      indri::utility::IndriTimer t; t.start();
-#define PRINT_TIMER(s)  { t.printElapsedMicroseconds( std::cout ); std::cout << ": " << s << std::endl; }
+#define PRINT_TIMER(s)  { t.printElapsedMicroseconds( std::cerr ); std::cerr << ": " << s << std::endl; }
 #else
 #define INIT_TIMER
 #define PRINT_TIMER(s)
