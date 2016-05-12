@@ -597,7 +597,7 @@ public:
       }
     } else {
       if( _parameters.get( "fbDocs", 0 ) != 0 ) {
-        _expander = new indri::query::RMExpander( &_environment, _parameters );
+        _expander = new indri::query::TFIDFExpander( &_environment, _parameters );
       }
     }
 
