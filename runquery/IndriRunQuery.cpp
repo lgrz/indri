@@ -363,7 +363,7 @@ private:
   void _runQuery( std::stringstream& output, const std::string& query,
                   const std::string &queryType, const std::vector<std::string> &workingSet, std::vector<std::string> relFBDocs ) {
     try {
-      if( _printQuery ) output << "# query: " << query << std::endl;
+      output << "# query: " << query << std::endl;
       std::vector<lemur::api::DOCID_T> docids;;
       if (workingSet.size() > 0) 
         docids = _environment.documentIDsFromMetadata("docno", workingSet);
@@ -397,13 +397,8 @@ private:
           expandedQuery = _expander->expand( query, fbDocs );
         else
           expandedQuery = _expander->expand( query, _results );
-        if( _printQuery ) output << "# expanded: " << expandedQuery << std::endl;
-        if (workingSet.size() > 0) {
-          docids = _environment.documentIDsFromMetadata("docno", workingSet);
-          _results = _environment.runQuery( expandedQuery, docids, _requested, queryType );
-        } else {
-          _results = _environment.runQuery( expandedQuery, _requested, queryType );
-        }
+        output << "# expanded: " << expandedQuery << std::endl;
+        _results.clear();
       }
     }
     catch( lemur::api::Exception& e )
@@ -646,6 +641,7 @@ public:
       if (_parameters.exists("baseline") && ((query->text.find("#") != std::string::npos) || (query->text.find(".") != std::string::npos)) ) {
         LEMUR_THROW( LEMUR_PARSE_ERROR, "Can't run baseline on this query: " + query->text + "\nindri query language operators are not allowed." );
       }
+      output << "# number: " << query->number << std::endl;
       _runQuery( output, query->text, query->qType, query->workingSet, query->relFBDocs );
     } catch( lemur::api::Exception& e ) {
       output << "# EXCEPTION in query " << query->number << ": " << e.what() << std::endl;
