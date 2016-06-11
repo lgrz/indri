@@ -290,6 +290,56 @@ as <tt>-fbOrigWeight=number</tt> on the command line.</dd>
 #include <iostream>
 #include <fstream>
 
+// Record query time and collect expansion terms
+class RunStat {
+  indri::utility::IndriTimer _timer;
+  UINT64 _elapsed;
+  std::string _query;
+  std::string _expanded_query;
+public:
+  RunStat() :
+    _elapsed(0),
+    _query(""),
+    _expanded_query("")
+  {}
+
+  inline void start()
+  {
+    _elapsed = 0;
+    _timer.start();
+  }
+
+  inline void stop()
+  {
+    _elapsed = _timer.elapsedTime();
+  }
+
+  inline int get_elapsed()
+  {
+    return int(_elapsed / 1e3);
+  }
+
+  inline void set_query(const std::string& str)
+  {
+    _query = str;
+  }
+
+  inline void set_expanded(const std::string& str)
+  {
+    _expanded_query = str;
+  }
+
+  inline std::string& get_query()
+  {
+    return _query;
+  }
+
+  inline std::string& get_expanded()
+  {
+    return _expanded_query;
+  }
+};
+
 static bool copy_parameters_to_string_vector( std::vector<std::string>& vec, indri::api::Parameters p, const std::string& parameterName ) {
   if( !p.exists(parameterName) )
     return false;
@@ -324,6 +374,17 @@ struct query_t {
   {
   }
 
+  query_t(int _index, std::string _number, const std::string& _text, int ms,
+      const std::string& q_str, const std::string& e_str) :
+    index(_index),
+    number(_number),
+    text(_text),
+    elapsed_ms(ms),
+    query_str(q_str),
+    expanded_str(e_str)
+  {
+  }
+
   std::string number;
   int index;
   std::string text;
@@ -332,6 +393,9 @@ struct query_t {
   std::vector<std::string> workingSet;
   // Rel fb docs
   std::vector<std::string> relFBDocs;
+  int elapsed_ms;
+  std::string query_str;
+  std::string expanded_str;
 };
 
 class QueryThread : public indri::thread::UtilityThread {
@@ -361,9 +425,14 @@ private:
 
   // Runs the query, expanding it if necessary.  Will print output as well if verbose is on.
   void _runQuery( std::stringstream& output, const std::string& query,
-                  const std::string &queryType, const std::vector<std::string> &workingSet, std::vector<std::string> relFBDocs ) {
+                  const std::string &queryType,
+                  const std::vector<std::string> &workingSet,
+                  std::vector<std::string> relFBDocs,
+                  RunStat *stat )
+  {
     try {
       if( _printQuery ) output << "# query: " << query << std::endl;
+      stat->set_query(query);
       std::vector<lemur::api::DOCID_T> docids;;
       if (workingSet.size() > 0) 
         docids = _environment.documentIDsFromMetadata("docno", workingSet);
@@ -398,6 +467,7 @@ private:
         else
           expandedQuery = _expander->expand( query, _results );
         if( _printQuery ) output << "# expanded: " << expandedQuery << std::endl;
+        stat->set_expanded(expandedQuery);
         if (workingSet.size() > 0) {
           docids = _environment.documentIDsFromMetadata("docno", workingSet);
           _results = _environment.runQuery( expandedQuery, docids, _requested, queryType );
@@ -629,6 +699,7 @@ public:
   UINT64 work() {
     query_t* query;
     std::stringstream output;
+    RunStat stat;
 
     // pop a query off the queue
     {
@@ -646,7 +717,9 @@ public:
       if (_parameters.exists("baseline") && ((query->text.find("#") != std::string::npos) || (query->text.find(".") != std::string::npos)) ) {
         LEMUR_THROW( LEMUR_PARSE_ERROR, "Can't run baseline on this query: " + query->text + "\nindri query language operators are not allowed." );
       }
-      _runQuery( output, query->text, query->qType, query->workingSet, query->relFBDocs );
+      stat.start();
+      _runQuery( output, query->text, query->qType, query->workingSet, query->relFBDocs, &stat );
+      stat.stop();
     } catch( lemur::api::Exception& e ) {
       output << "# EXCEPTION in query " << query->number << ": " << e.what() << std::endl;
     }
@@ -657,7 +730,7 @@ public:
     // push that data into an output queue...?
     {
       indri::thread::ScopedLock sl( &_queueLock );
-      _output.push( new query_t( query->index, query->number, output.str() ) );
+      _output.push( new query_t( query->index, query->number, output.str(), stat.get_elapsed(), stat.get_query(), stat.get_expanded() ) );
       _queueEvent.notifyAll();
     }
 
@@ -718,6 +791,30 @@ int main(int argc, char * argv[]) {
 
     if (param.exists("baseline") && param.exists("rule"))
       LEMUR_THROW( LEMUR_BAD_PARAMETER_ERROR, "Smoothing rules may not be specified when running a baseline." );
+
+    bool time_query = false;
+    std::ofstream fquery_time;
+    if (param.exists("timeQuery")) {
+      std::string outfile = param.get("timeQuery");
+      fquery_time.open(outfile.c_str());
+      time_query = true;
+      if (!fquery_time.good()) {
+        LEMUR_THROW(LEMUR_IO_ERROR, "Couldn't open file '" + outfile
+            + "' for writing.");
+      }
+    }
+
+    bool log_query = false;
+    std::ofstream fquery_log;
+    if (param.exists("logQuery")) {
+      std::string outfile = param.get("logQuery");
+      fquery_log.open(outfile.c_str());
+      log_query = true;
+      if (!fquery_log.good()) {
+        LEMUR_THROW(LEMUR_IO_ERROR, "Couldn't open file '" + outfile
+            + "' for writing.");
+      }
+    }
 
     if (param.exists("stopfile")) {
       std::string stopfile = param.get("stopfile", "");
@@ -801,6 +898,16 @@ int main(int argc, char * argv[]) {
         queueLock.unlock();
 
         std::cout << result->text;
+
+        std::cerr << result->number << std::endl;
+        if (time_query) {
+          fquery_time << result->number << "," << result->elapsed_ms << std::endl;
+        }
+        if (log_query) {
+          fquery_log << result->number << "," << result->query_str << ","
+            << result->expanded_str << std::endl;
+        }
+
         delete result;
         query++;
 
@@ -828,4 +935,3 @@ int main(int argc, char * argv[]) {
 
   return 0;
 }
-
