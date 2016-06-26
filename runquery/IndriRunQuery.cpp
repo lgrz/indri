@@ -717,6 +717,36 @@ public:
       if (_parameters.exists("baseline") && ((query->text.find("#") != std::string::npos) || (query->text.find(".") != std::string::npos)) ) {
         LEMUR_THROW( LEMUR_PARSE_ERROR, "Can't run baseline on this query: " + query->text + "\nindri query language operators are not allowed." );
       }
+
+      // perform query side stopping
+      std::vector<std::string> query_terms;
+      std::stringstream ss(query->text);
+      std::string item;
+      std::map< std::string, bool > _stopwords;
+
+      if (_parameters.exists("stopper.word")) {
+          indri::api::Parameters words = _parameters["stopper.word"];
+          for (size_t i = 0; i < words.size(); i++) {
+              _stopwords[words[i]] = true;
+          }
+      }
+      while (getline(ss, item, ' ')) {
+          if (item.length() > 0 && _stopwords.find(item) == _stopwords.end()) {
+              query_terms.push_back(item);
+          }
+      }
+      ss.clear();
+      ss.str(std::string());
+      for (size_t i = 0; i < query_terms.size(); ++i) {
+          if (0 != i) {
+              ss << " ";
+          }
+          ss << query_terms[i];
+      }
+      /* std::cerr << ss.str() << std::endl; */
+      query->text = ss.str();
+      /* std::cerr << query->text << std::endl; */
+
       stat.start();
       _runQuery( output, query->text, query->qType, query->workingSet, query->relFBDocs, &stat );
       stat.stop();
