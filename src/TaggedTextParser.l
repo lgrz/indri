@@ -139,7 +139,7 @@ indri::api::ParsedDocument* indri::parse::TaggedTextParser::parse( indri::parse:
   parser_scan_bytes(document->text, len);
   doParse();
   cleanup(document, &_document);
-  parser_delete_buffer(yy_current_buffer);
+  parser_delete_buffer(YY_CURRENT_BUFFER);
   
   return &_document;
 }

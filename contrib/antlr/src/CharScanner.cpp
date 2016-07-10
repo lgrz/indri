@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <cstdlib>
 
 #include "antlr/CharScanner.hpp"
 #include "antlr/CommonToken.hpp"

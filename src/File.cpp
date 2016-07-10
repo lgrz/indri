@@ -22,6 +22,7 @@
 #ifndef WIN32
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <cstdlib>
 #endif
 
 #include "lemur/Exception.hpp"

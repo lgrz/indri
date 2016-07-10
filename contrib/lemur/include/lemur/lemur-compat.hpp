@@ -18,6 +18,8 @@
 #include "lemur-platform.h"
 
 #include <memory>
+#include <cstring>
+#include <cstdlib>
 
 #ifdef WIN32
   #include <xutility>

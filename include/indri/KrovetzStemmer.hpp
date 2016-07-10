@@ -18,6 +18,7 @@
 #include <hash_map>
 #else
 #include <ext/hash_map>
+#include <cstring>
 // 3.3 does not use __gnu_cxx, 3.4+ does.
 using namespace __gnu_cxx;
 #endif

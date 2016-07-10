@@ -56,7 +56,7 @@ namespace indri
                              document->metadata.end(),
                              MetadataPair::key_equal( "url" ) );
 
-        const char* page = (char*)iter->value;
+        char* page = (char*)iter->value;
         const char* url = 0;
         int count = 0;
         int urlEnd = -1;
