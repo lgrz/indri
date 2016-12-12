@@ -521,8 +521,8 @@ void indri::parse::PageRank::indexPageRank( const std::string& outputFile,
     std::string relative = indri::file::Path::relative( _corpusPath, filePath );
     std::string linkFile = indri::file::Path::combine( _linkPath, relative );
     bool result = true;
-    if( _in )
-      gzclose( _in );
+    // if( _in )
+    //   gzclose( _in );
     _in = gzopen( linkFile.c_str(), "rb" );
 
     // grab the doc ids of the source documents we're interested in
@@ -536,6 +536,10 @@ void indri::parse::PageRank::indexPageRank( const std::string& outputFile,
 
       int linkCount = atoi( linkCountText + sizeof "LINKS=" - 1 );
       docids = _repository.collection()->retrieveIDByMetadatum("docno", docno + 6);
+      if (!docids.size()) {
+          std::cerr << "docid not found for docno: " << docno << std::endl;
+          break;
+      }
       docid = docids[0];
       docids.clear();
       linkids.clear();
