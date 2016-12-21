@@ -364,6 +364,10 @@ namespace indri
       /// @param query the bag of words query to reformulate.
       /// @return the indri query language reformulated query.
       std::string reformulateQuery(const std::string &query);
+
+      std::vector<indri::collection::Repository *> getRepositories() {
+        return _repositories;
+      }
     };
   }
 }
