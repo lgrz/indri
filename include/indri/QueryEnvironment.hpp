@@ -145,6 +145,7 @@ namespace indri
 
       Parameters _parameters;
       bool _baseline;
+      bool _bm25f;
       
       void _mergeQueryResults( indri::infnet::InferenceNetwork::MAllResults& results, std::vector<indri::server::QueryServerResponse*>& responses );
       void _copyStatistics( std::vector<indri::lang::RawScorerNode*>& scorerNodes, indri::infnet::InferenceNetwork::MAllResults& statisticsResults );
@@ -177,6 +178,7 @@ namespace indri
       /// \brief Set whether there should be one single background model or context sensitive models
       /// @param background true for one background model false for context sensitive models
       void setBaseline(const std::string &baseline);
+      void setBm25f();
       void setSingleBackgroundModel( bool background );
       /// \brief Set the scoring rules
       /// @param rules the vector of scoring rules.

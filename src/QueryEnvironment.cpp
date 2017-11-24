@@ -71,7 +71,7 @@ using namespace lemur::api;
 // debug code: should be gone soon
 #ifdef TIME_QUERIES
 #define INIT_TIMER      indri::utility::IndriTimer t; t.start();
-#define PRINT_TIMER(s)  { t.printElapsedMicroseconds( std::cout ); std::cout << ": " << s << std::endl; }
+#define PRINT_TIMER(s)  { t.printElapsedMicroseconds( std::cerr ); std::cerr << ": " << s << std::endl; }
 #else
 #define INIT_TIMER
 #define PRINT_TIMER(s)
@@ -90,8 +90,8 @@ namespace indri
 
       void defaultBefore( indri::lang::Node* n ) {
         for( int i=0; i<tabs; i++ )
-          std::cout << "\t";
-        std::cout << n->typeName() << " " << n->nodeName() << " " << n->queryText() << std::endl;
+          std::cerr << "\t";
+        std::cerr << n->typeName() << " " << n->nodeName() << " " << n->queryText() << std::endl;
         tabs++;
       }
 
@@ -145,7 +145,7 @@ void qenv_gather_document_results( const std::vector< std::vector<DOCID_T> >& do
 // QueryEnvironment definition
 //
 
-indri::api::QueryEnvironment::QueryEnvironment() : _baseline(false) { 
+indri::api::QueryEnvironment::QueryEnvironment() : _baseline(false), _bm25f(false) {
   reformulator = new indri::query::ReformulateQuery(reformulatorParams);
 }
 
@@ -172,6 +172,10 @@ void indri::api::QueryEnvironment::setBaseline( const std::string& baseline ) {
   std::string rule = "method:" + baseline;
   _parameters.set("rule", rule);
   _baseline = true;
+}
+
+void indri::api::QueryEnvironment::setBm25f() {
+  _bm25f = true;
 }
 
 void indri::api::QueryEnvironment::setStopwords( const std::vector<std::string>& stopwords ) {
@@ -916,7 +920,7 @@ std::vector<indri::api::ScoredExtentResult> indri::api::QueryEnvironment::_runQu
     
     if (rootScorer) {
       // make sure it doesn't have any field restrictions
-      if ( q.find(".") != std::string::npos) {
+      if (!_bm25f && q.find(".") != std::string::npos) {
         LEMUR_THROW( LEMUR_PARSE_ERROR, "Can't run baseline on this query: " + q + "\nindri query language field restrictions are not allowed." );
       }
       indri::lang::PlusNode * plusNode = new indri::lang::PlusNode();
@@ -930,7 +934,7 @@ std::vector<indri::api::ScoredExtentResult> indri::api::QueryEnvironment::_runQu
     }  else if (rawScorer) {        
       // if a RawScorerNode, just leave it
       // make sure it doesn't have any field restrictions
-      if ( q.find(".") != std::string::npos) {
+      if (!_bm25f &&  q.find(".") != std::string::npos) {
         LEMUR_THROW( LEMUR_PARSE_ERROR, "Can't run baseline on this query: " + q + "\nindri query language field restrictions are not allowed." );
       }
     }

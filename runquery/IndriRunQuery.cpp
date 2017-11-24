@@ -593,6 +593,9 @@ public:
         _parameters.set("rule", rule);
         _expander = new indri::query::TFIDFExpander( &_environment, _parameters );
       }
+      if (_parameters.exists("bm25f")) {
+        _environment.setBm25f();
+      }
     } else {
       if( _parameters.get( "fbDocs", 0 ) != 0 ) {
         _expander = new indri::query::RMExpander( &_environment, _parameters );
@@ -641,9 +644,6 @@ public:
 
     // run the query
     try {
-      if (_parameters.exists("baseline") && ((query->text.find("#") != std::string::npos) || (query->text.find(".") != std::string::npos)) ) {
-        LEMUR_THROW( LEMUR_PARSE_ERROR, "Can't run baseline on this query: " + query->text + "\nindri query language operators are not allowed." );
-      }
       _runQuery( output, query->text, query->qType, query->workingSet, query->relFBDocs );
     } catch( lemur::api::Exception& e ) {
       output << "# EXCEPTION in query " << query->number << ": " << e.what() << std::endl;

@@ -2,7 +2,12 @@
 
 INSTALLDIRS = $(bindir) $(includedir) $(pkgincludedir) $(includedir)/lemur $(libdir) $(pkgdatadir) $(pkgdatadir)/doc
 
-.PHONY: all dist clean install $(INSTALLDIRS) site-search
+.PHONY: all dist clean install $(INSTALLDIRS) site-search lib runquery
+
+runquery: lib
+	$(MAKE) -C runquery
+lib:
+	$(MAKE) -C obj -f ../src/Makefile
 
 all: 
 	$(MAKE) -C contrib
