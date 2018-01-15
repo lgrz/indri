@@ -930,7 +930,8 @@ SWIG_ZTS_ConvertResourcePtr(zval *z, swig_type_info *ty, int flags TSRMLS_DC) {
   p = value->ptr;
   if (type==-1) return NULL;
 
-  type_name=zend_rsrc_list_get_rsrc_type(z->value.lval TSRMLS_CC);
+  /* type_name=zend_rsrc_list_get_rsrc_type(z->value.lval TSRMLS_CC); */
+  type_name=const_cast<char *>(zend_rsrc_list_get_rsrc_type(z->value.lval TSRMLS_CC));
 
   return SWIG_ZTS_ConvertResourceData(p, type_name, ty TSRMLS_CC);
 }
@@ -1347,7 +1348,8 @@ ZEND_NAMED_FUNCTION(_wrap_TermExtent_begin_set) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1373,7 +1375,8 @@ ZEND_NAMED_FUNCTION(_wrap_TermExtent_begin_get) {
   }
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1403,7 +1406,8 @@ ZEND_NAMED_FUNCTION(_wrap_TermExtent_end_set) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1429,7 +1433,8 @@ ZEND_NAMED_FUNCTION(_wrap_TermExtent_end_get) {
   }
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1448,7 +1453,8 @@ static void __wrap_delete_TermExtent(zend_rsrc_list_entry *rsrc, const char *typ
   delete arg1;
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1466,7 +1472,8 @@ ZEND_NAMED_FUNCTION(_wrap_new_TermExtent) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1484,7 +1491,8 @@ ZEND_NAMED_FUNCTION(_wrap_new_Parameters) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1503,7 +1511,8 @@ static void __wrap_delete_Parameters(zend_rsrc_list_entry *rsrc, const char *typ
   delete arg1;
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1534,7 +1543,8 @@ ZEND_NAMED_FUNCTION(_wrap_Parameters_set) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1575,7 +1585,8 @@ ZEND_NAMED_FUNCTION(_wrap_Parameters_get_bool) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1616,7 +1627,8 @@ ZEND_NAMED_FUNCTION(_wrap_Parameters_get_int) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1657,7 +1669,8 @@ ZEND_NAMED_FUNCTION(_wrap_Parameters_get_double) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1697,7 +1710,8 @@ ZEND_NAMED_FUNCTION(_wrap_Parameters_get_INT64) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1739,7 +1753,8 @@ ZEND_NAMED_FUNCTION(_wrap_Parameters_get_string) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1770,7 +1785,8 @@ ZEND_NAMED_FUNCTION(_wrap_Parameters_remove) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1808,7 +1824,8 @@ ZEND_NAMED_FUNCTION(_wrap_Parameters_set_bool) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1847,7 +1864,8 @@ ZEND_NAMED_FUNCTION(_wrap_Parameters_set_string) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1885,7 +1903,8 @@ ZEND_NAMED_FUNCTION(_wrap_Parameters_set_int) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1921,7 +1940,8 @@ ZEND_NAMED_FUNCTION(_wrap_Parameters_set_UINT64) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1959,7 +1979,8 @@ ZEND_NAMED_FUNCTION(_wrap_Parameters_set_double) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -1982,7 +2003,8 @@ ZEND_NAMED_FUNCTION(_wrap_Parameters_clear) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2008,7 +2030,8 @@ ZEND_NAMED_FUNCTION(_wrap_Parameters_size) {
   }
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2042,7 +2065,8 @@ ZEND_NAMED_FUNCTION(_wrap_Parameters_exists) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2073,7 +2097,8 @@ ZEND_NAMED_FUNCTION(_wrap_Parameters_load) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2092,7 +2117,8 @@ static void __wrap_delete_ScoredExtentResult(zend_rsrc_list_entry *rsrc, const c
   delete arg1;
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2110,7 +2136,8 @@ ZEND_NAMED_FUNCTION(_wrap_new_ScoredExtentResult) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2129,7 +2156,8 @@ static void __wrap_delete_ParsedDocument(zend_rsrc_list_entry *rsrc, const char 
   delete arg1;
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2155,7 +2183,8 @@ ZEND_NAMED_FUNCTION(_wrap_ParsedDocument_getContent) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2173,7 +2202,8 @@ ZEND_NAMED_FUNCTION(_wrap_new_ParsedDocument) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2193,7 +2223,8 @@ ZEND_NAMED_FUNCTION(_wrap_new_QueryAnnotationNode) {
   }
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2212,7 +2243,8 @@ static void __wrap_delete_QueryAnnotationNode(zend_rsrc_list_entry *rsrc, const 
   delete arg1;
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2240,7 +2272,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryAnnotation_getQueryTree) {
   }
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2299,7 +2332,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryAnnotation_getAnnotations) {
   }
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2349,7 +2383,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryAnnotation_getResults) {
   }
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2368,7 +2403,8 @@ static void __wrap_delete_QueryAnnotation(zend_rsrc_list_entry *rsrc, const char
   delete arg1;
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2387,7 +2423,8 @@ static void __wrap_delete_QueryEnvironment(zend_rsrc_list_entry *rsrc, const cha
   delete arg1;
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2418,7 +2455,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_addServer) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2449,7 +2487,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_addIndex) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2472,7 +2511,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_close) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2500,7 +2540,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_setMemory) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2552,7 +2593,8 @@ fail:
     // freearg typemap
     delete arg2;
   }
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2604,7 +2646,8 @@ fail:
     // freearg typemap
     delete arg2;
   }
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2677,7 +2720,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_runQuery) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2779,7 +2823,8 @@ fail:
     // freearg typemap
     delete arg3;
   }
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2840,7 +2885,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_runAnnotatedQuery) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -2930,7 +2976,8 @@ fail:
     // freearg typemap
     delete arg3;
   }
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3054,7 +3101,8 @@ fail:
     // freearg typemap
     delete arg2;
   }
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3179,7 +3227,8 @@ fail:
     // freearg typemap
     delete arg2;
   }
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3255,7 +3304,8 @@ fail:
     // freearg typemap
     delete arg2;
   }
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3332,7 +3382,8 @@ fail:
     // freearg typemap
     delete arg2;
   }
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3408,7 +3459,8 @@ fail:
     // freearg typemap
     delete arg3;
   }
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3435,7 +3487,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_termCount) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3470,7 +3523,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_onetermCount) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3505,7 +3559,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_stemCount) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3548,7 +3603,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_termFieldCount) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3591,7 +3647,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_stemFieldCount) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3621,7 +3678,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_fieldList) {
   }
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3648,7 +3706,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_documentCount) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3683,7 +3742,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_onedocumentCount) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3725,7 +3785,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_expressionCount__SWIG_0) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3759,7 +3820,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_expressionCount__SWIG_1) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3846,7 +3908,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_documentExpressionCount__SWIG_0) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3880,7 +3943,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_documentExpressionCount__SWIG_1) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -3990,7 +4054,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_expressionList__SWIG_0) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -4047,7 +4112,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_expressionList__SWIG_1) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -4125,7 +4191,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_documentLength) {
   }
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -4163,7 +4230,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_setFormulationParameters) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -4206,7 +4274,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryEnvironment_reformulateQuery) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -4224,7 +4293,8 @@ ZEND_NAMED_FUNCTION(_wrap_new_QueryEnvironment) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -4243,7 +4313,8 @@ static void __wrap_delete_QueryExpander(zend_rsrc_list_entry *rsrc, const char *
   delete arg1;
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -4311,7 +4382,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryExpander_runExpandedQuery__SWIG_0) {
   }
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -4372,7 +4444,8 @@ ZEND_NAMED_FUNCTION(_wrap_QueryExpander_runExpandedQuery__SWIG_1) {
   }
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -4483,7 +4556,8 @@ fail:
     // freearg typemap
     delete arg3;
   }
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -4514,7 +4588,8 @@ ZEND_NAMED_FUNCTION(_wrap_new_RMExpander) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -4575,7 +4650,8 @@ fail:
     // freearg typemap
     delete arg3;
   }
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -4594,7 +4670,8 @@ static void __wrap_delete_RMExpander(zend_rsrc_list_entry *rsrc, const char *typ
   delete arg1;
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -4625,7 +4702,8 @@ ZEND_NAMED_FUNCTION(_wrap_new_PonteExpander) {
   
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -4686,7 +4764,8 @@ fail:
     // freearg typemap
     delete arg3;
   }
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
@@ -4705,7 +4784,8 @@ static void __wrap_delete_PonteExpander(zend_rsrc_list_entry *rsrc, const char *
   delete arg1;
   return;
 fail:
-  zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
+  /* zend_error_noreturn(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg()); */
+  zend_error(SWIG_ErrorCode(),"%s",SWIG_ErrorMsg());
 }
 
 
