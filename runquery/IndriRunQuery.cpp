@@ -343,6 +343,7 @@ private:
   indri::api::Parameters& _parameters;
   int _requested;
   int _initialRequested;
+  int _rerankSize;
 
   bool _printDocuments;
   bool _printPassages;
@@ -376,8 +377,10 @@ private:
           } else {
             if (workingSet.size() > 0)
               _results = _environment.runQuery( query, docids, _initialRequested, queryType );
-            else
-              _results = _environment.runQuery( query, _initialRequested, queryType );
+            else {
+              _results = _environment.runQuery( query, (_rerankSize > 0) ? _rerankSize : _initialRequested, queryType );
+              std::cerr << "rerank" << std::endl;
+            }
           }
       }
       
@@ -391,16 +394,32 @@ private:
           }
         }
         std::string expandedQuery;
-        if (relFBDocs.size() != 0)
+        if (relFBDocs.size() != 0) {
           expandedQuery = _expander->expand( query, fbDocs );
-        else
-          expandedQuery = _expander->expand( query, _results );
+        } else {
+          if (_rerankSize > 0) {
+            std::cerr << "rerank2" << std::endl;
+            std::vector<indri::api::ScoredExtentResult> _resultsFB(_results.begin(),_results.begin()+_initialRequested);                          
+            expandedQuery = _expander->expand( query, _resultsFB );
+          } else {
+            expandedQuery = _expander->expand( query, _results );              
+          }
+        }
         if( _printQuery ) output << "# expanded: " << expandedQuery << std::endl;
         if (workingSet.size() > 0) {
           docids = _environment.documentIDsFromMetadata("docno", workingSet);
           _results = _environment.runQuery( expandedQuery, docids, _requested, queryType );
         } else {
-          _results = _environment.runQuery( expandedQuery, _requested, queryType );
+          if (_rerankSize > 0) {
+            std::cerr << "rerank3" << std::endl;
+            std::vector<lemur::api::DOCID_T> rerankSet;
+            for (int i = 0 ; i < _results.size() ; i++) {
+              rerankSet.push_back(_results[i].document);
+            }
+            _results = _environment.runQuery( expandedQuery, rerankSet, _requested, queryType );              
+          } else {
+            _results = _environment.runQuery( expandedQuery, _requested, queryType );              
+          }
         }
       }
     }
@@ -571,6 +590,7 @@ public:
     if( _parameters.exists("maxWildcardTerms") )
         _environment.setMaxWildcardTerms(_parameters.get("maxWildcardTerms", 100));
 
+    _rerankSize = _parameters.get( "rerank", 0 );
     _requested = _parameters.get( "count", 1000 );
     _initialRequested = _parameters.get( "fbDocs", _requested );
     _runID = _parameters.get( "runID", "indri" );
