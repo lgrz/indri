@@ -403,10 +403,8 @@ indri::server::QueryServerResponse* indri::server::LocalQueryServer::runQuery( s
     // annotation queries may ask for this
     networkRoots = contexts.roots();
   }
-  /*
-    indri::lang::TreePrinterWalker printer;
-    indri::lang::ApplyWalker<indri::lang::TreePrinterWalker> printTree(networkRoots, &printer);
-  */
+
+  indri::lang::ApplyWalker<indri::lang::TreePrinterWalker> printTree(networkRoots, &printer);
 
   // build an inference network
   indri::infnet::InferenceNetworkBuilder builder( _repository, _cache, resultsRequested, _maxWildcardMatchesPerTerm );
@@ -415,6 +413,19 @@ indri::server::QueryServerResponse* indri::server::LocalQueryServer::runQuery( s
   indri::infnet::InferenceNetwork* network = builder.getNetwork();
   indri::infnet::InferenceNetwork::MAllResults result;
   result = network->evaluate();
+
+  for (auto e : contexts.roots()) {
+    std::cerr << e->nodeName() << " " << e->queryText() << std::endl;
+  }
+
+  if (result.size() > 1) {
+    for (auto e : result) {
+      std::cerr << e.first << std::endl;
+      for (auto f : e.second) {
+        std::cerr << "  " << f.first << ": " << f.second[0].score << std::endl;
+      }
+    }
+  }
 
   return new indri::server::LocalQueryServerResponse( result );
 }
