@@ -43,7 +43,8 @@ namespace indri
 
       double scoreOccurrence( double occurrences, int contextSize ) {
         double seen = ( double(occurrences) + _muTimesCollectionFrequency ) / ( double(contextSize) + _mu );
-        return log( seen );
+	//return double(_mu);
+        return log(seen);
       }
 
       double scoreOccurrence( double occurrences, int contextSize, double documentOccurrences, int documentLength ) {
