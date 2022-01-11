@@ -413,8 +413,9 @@ void indri::api::IndexEnvironment::addFile( const std::string& fileName, const s
             break;
           }
         }
-        // Check if blacklisted
-        if(_blackedDocs.find(docIDStr)!=_blackedDocs.end())
+        // Here we are using the existing black list functionality in negated
+        // form to build an index via a whitelist
+        if(_blackedDocs.find(docIDStr)==_blackedDocs.end())
             continue;
 
         // look up the id.
